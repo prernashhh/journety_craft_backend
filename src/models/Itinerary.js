@@ -59,6 +59,9 @@ const ItinerarySchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
     },
+    image: {
+        type: String,
+    },
 }, {
     timestamps: true
 });

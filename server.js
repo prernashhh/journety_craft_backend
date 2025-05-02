@@ -22,7 +22,7 @@ const userRoutes = require('./src/routes/userRoutes');
 const eventRoutes = require('./src/routes/eventRoutes');
 const itineraryRoutes = require('./src/routes/itineraryRoutes');
 const wishlistRoutes = require('./src/routes/wishlistRoutes');
-const messageRoutes = require('./src/routes/messageRoutes');
+const messageRoutes = require('./src/routes/messageRoutes'); 
 
 const app = express();
 
@@ -42,9 +42,9 @@ app.get('/', (req, res) => {
   });
 });
 
-// Health check route
-app.get('/health', (req, res) => {
-  res.status(200).json({ status: 'OK' });
+// Add this with your routes
+app.get('/api/health', (req, res) => {
+  res.status(200).json({ status: 'Server is running' });
 });
 
 // Routes
@@ -53,7 +53,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/events', eventRoutes);
 app.use('/api/itineraries', itineraryRoutes);
 app.use('/api/wishlist', wishlistRoutes);
-app.use('/api/messages', messageRoutes);
+app.use('/api/messages', messageRoutes); // Update this line
 
 // Error handling middleware
 app.use((err, req, res, next) => {
@@ -76,3 +76,5 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+module.exports = app;

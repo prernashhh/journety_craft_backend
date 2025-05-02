@@ -147,8 +147,10 @@ const wishlistController = {
     checkWishlistItem: async (req, res) => {
         try {
             const { type, itemId } = req.params;
+            console.log(`Checking wishlist for ${type} with ID: ${itemId}`);
             
             if (type !== 'event' && type !== 'itinerary') {
+                console.log(`Invalid type: ${type}`);
                 return res.status(400).json({ error: 'Invalid type parameter' });
             }
             

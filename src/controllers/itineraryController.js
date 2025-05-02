@@ -41,8 +41,24 @@ const itineraryController = {
     // Get all itineraries - both user types can access this
     getAllItineraries: async (req, res) => {
         try {
-            const itineraries = await Itinerary.find()
-                .populate('user', 'name email role'); // Populate organizer info
+            // Get query parameters
+            const { destination } = req.query;
+            
+            // Build query object
+            let query = { status: 'Published' };
+            
+            if (destination) {
+                // Search for destination in either the main destination field or in the destinations array
+                query.$or = [
+                    { destination: { $regex: destination, $options: 'i' } },
+                    { 'destinations.location': { $regex: destination, $options: 'i' } }
+                ];
+            }
+            
+            // Execute query with filters
+            const itineraries = await Itinerary.find(query)
+                .populate('user', 'name email role');
+                
             res.json(itineraries);
         } catch (error) {
             res.status(500).json({ error: error.message });
